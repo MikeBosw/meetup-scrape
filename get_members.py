@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
+from os import path
+from subprocess import call
+
 import sys
 import requests
 import json
+import time
 
 if len(sys.argv) < 3:
   print("1. Find the group's URL name - the part that comes right after meetup.com/. For example, in the case of https://www.meetup.com/Blockchain-for-Funds/, it would be Blockchain-for-Funds.")
@@ -34,5 +38,12 @@ html="""<hr>
 def to_html(p):
   return html.format(link=p['link'], name=p['name'], photo=p['photo_url'])
 
-print("".join([to_html(p) for p in people]))
+html_output = "".join([to_html(p) for p in people])
+
+html_file_path = path.expanduser("~/Downloads/{}.{}.html".format(group_name, int(time.time())))
+html_file = open(html_file_path, 'w')
+html_file.write(html_output)
+html_file.close()
+
+call(['open', html_file_path])
 

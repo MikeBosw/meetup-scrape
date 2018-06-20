@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    function scrape() {
+      $.ajax({
+        url: "https://api.meetup.com/members?group_urlname=Blockchain-for-Funds&sign=true&key=7e4025835257a50185162136571d57",
+        type: "GET",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('Access-Control-Expose-Headers',
+              'X-Meetup-server, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset');
+          xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+          xhr.setRequestHeader('Access-Control-Allow-Headers', 'x-requested-with');
+
+          xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+          xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+          xhr.setRequestHeader('Access-Control-Max-Age', '86400');
+        },
+        success: function () {
+          alert('Success!' + authHeader);
+        }
+      });
+    }
+  </script>
+</head>
+
+<body>
+
+<p>
+  Key (look up <a href="https://secure.meetup.com/meetup_api/key/">here</a>):
+  <input type="text" id="key"/>
+  <input type="button" name="Scrape" value="Scrape" onclick="scrape()"></input>
+</p>
+
+</body>
+
+</html>
